@@ -2,12 +2,8 @@ const form = document.getElementById('registrar');
 const input = document.querySelector('input');
 const ul = document.getElementById('invitedList');
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  const text = input.value;
-  input.value = '';
-  
+function createLi(text){
+  // create new name in list
   const li = document.createElement('li');
   li.textContent = text;
 
@@ -23,7 +19,17 @@ form.addEventListener('submit', (e) => {
   const button = document.createElement('button');
   button.textContent = 'remove';
   li.appendChild(button);
+
+  return li;
+}
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
   
+  const text = input.value;
+  input.value = '';
+  
+  const li = createLi(text);
 
   //adding new guest to list
   ul.appendChild(li);
