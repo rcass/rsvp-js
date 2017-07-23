@@ -5,7 +5,9 @@ const ul = document.getElementById('invitedList');
 function createLi(text){
   // create new name in list
   const li = document.createElement('li');
-  li.textContent = text;
+  const span = document.createElement('span');
+  span.textContent = text;
+  li.appendChild(span);
 
   //create checkbox
   const label = document.createElement('label');
@@ -15,10 +17,15 @@ function createLi(text){
   label.appendChild(checkbox);
   li.appendChild(label);
 
-  //remove name
-  const button = document.createElement('button');
-  button.textContent = 'remove';
-  li.appendChild(button);
+  //edit name button
+  const editButton = document.createElement('button');
+  editButton.textContent = 'edit';
+  li.appendChild(editButton);
+
+  //remove name button
+  const removeButton = document.createElement('button');
+  removeButton.textContent = 'remove';
+  li.appendChild(removeButton);
 
   return li;
 }
@@ -49,9 +56,37 @@ ul.addEventListener('change', (e) => {
 });
 
 ul.addEventListener('click', (e) => {
-  if(e.target.tagName === 'BUTTON'){
-    const li = e.target.parentNode;
+  const button = e.target;
+
+  if(button.tagName === 'BUTTON'){
+    const li = button.parentNode;
     const ul = li.parentNode;
-    ul.removeChild(li);
+
+    if(button.textContent === 'remove') {
+      ul.removeChild(li);
+    } else if (button.textContent === 'edit') {
+      //create edit field
+      const span = li.firstElementChild;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = span.textContent; //show original text
+      li.insertBefore(input, span);
+      li.removeChild(span);
+
+      //change button text to save
+      button.textContent = 'save';
+
+    } else if (button.textContent === 'save') {
+      //create edit field
+      const input = li.firstElementChild;
+      const span = document.createElement('span');
+      span.textContent = input.value; //show original text
+      li.insertBefore(span, input);
+      li.removeChild(input);
+
+      //change button text to save
+      button.textContent = 'edit';
+
+    }
   }
 });
