@@ -28,6 +28,7 @@ filterCheckBox.addEventListener('change', (e) => {
   } else {
     for (let i = 0; i < lis.length; i++){
       let li = lis[i];
+      li.style.display = '';
     }
   }
 
